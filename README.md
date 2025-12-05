@@ -1,36 +1,59 @@
-# Linux & Cybersecurity Notes (TryHackMe)
+# TryHackMe Notes – Cybersecurity & Linux
 
-## Linux CLI Essentials
+This repository contains my personal notes and practical learnings from TryHackMe rooms and learning paths, focused on Linux, social engineering, phishing, and SOC fundamentals.
 
-### Navigation
-- `pwd` – show current directory
-- `ls` – list files
-- `cd` – change directory
-- `cat` – view file contents
+This repo is also used as a learning journal and portfolio for future cybersecurity roles.
 
-### Hidden Files
-- `ls -la` – list everything (including hidden)
-- `.bash_history` – command history file
+---
 
-### Log Analysis
-- `/var/log` – system logs directory
-- `grep "Failed password" auth.log` – search for failed logins
+## Topics Covered
 
-### File Searching
-- `find /home -name "*egg*"` – find suspicious files
+### Linux Fundamentals
+- File navigation and filesystem structure
+- Hidden files and permissions
+- Log analysis (`grep`)
+- File searching (`find`)
+- Process analysis (`ps`)
+- Root permissions
+- Bash history analysis
 
-### Special Symbols
-- `|`  – pipe output
-- `>`  – overwrite file
-- `>>` – append
-- `&&` – run if previous succeeds
+### Social Engineering & Phishing
+- Human-based attacks
+- Psychological manipulation
+- Phishing types (Email, SMS, QR, Calls, Social Media)
+- Fake login pages
+- Credential harvesting
+- Phishing prevention (S.T.O.P framework)
 
-### Privileges
-- `sudo su` – switch to root user
-- `whoami` – show active user
+### Tools & Practice
+- Linux Terminal (CLI)
+- Social Engineer Toolkit (SET)
+- Fake phishing server
+- TryHackMe AttackBox
 
-### Example of Malware Script
-```bash
-cat wishlist.txt | sort | uniq > /tmp/dump.txt
-rm wishlist.txt
-mv eastmas.txt wishlist.txt
+### Learning Method
+- Daily hands-on practice
+- Every room documented
+- Continuous improvement
+- Focused on Blue Team / SOC learning path
+
+---
+
+## Disclaimer
+
+This repository is strictly for educational purposes only.  
+All activities are executed in safe and legal TryHackMe lab environments.
+
+---
+
+## Status
+
+✅ Actively learning  
+✅ Updating regularly  
+✅ Focused on SOC / Defensive Security  
+
+---
+
+## Author
+
+Self-learning cybersecurity student documenting the journey.
