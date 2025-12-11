@@ -1,4 +1,4 @@
-#  Day 3 – Splunk Basics - Did you SIEM?
+#  Splunk Basics - Did you SIEM?
 
 ## Overview
 In this room, we investigated a compromised web server using Splunk.  
