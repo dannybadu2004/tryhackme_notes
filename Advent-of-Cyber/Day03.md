@@ -82,7 +82,7 @@ user_agent!=*Firefox*
 
 # 🕵️ Attack Chain
 
-## 1️⃣ Reconnaissance
+## 1️⃣ Recon
 ```spl
 sourcetype=web_traffic 
 client_ip="198.51.100.55" 
