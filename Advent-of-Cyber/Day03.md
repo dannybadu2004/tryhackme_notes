@@ -1,4 +1,4 @@
-# 📘 Day 3 – Splunk Basics - Did you SIEM?
+#  Day 3 – Splunk Basics - Did you SIEM?
 
 ## Overview
 In this room, we investigated a compromised web server using Splunk.  
@@ -7,7 +7,7 @@ and confirmed outbound C2 communication and data exfiltration.
 
 ---
 
-# 🔧 Data Sources
+#  Data Sources
 
 ### web_traffic
 - HTTP requests to the server  
@@ -19,7 +19,7 @@ and confirmed outbound C2 communication and data exfiltration.
 
 ---
 
-# 🧑‍💻 Starting the Investigation
+#  Starting the Investigation
 
 ### Show all logs
 ```spl
@@ -33,7 +33,7 @@ index=main sourcetype=web_traffic
 
 ---
 
-# 📈 Finding the Attack Day
+#  Finding the Attack Day
 
 ### Count logs per day
 ```spl
@@ -49,11 +49,11 @@ index=main sourcetype=web_traffic
 | reverse
 ```
 
-📌 Peak traffic day: **2025-10-12**
+ Peak traffic day: **2025-10-12**
 
 ---
 
-# 🐇 Identifying the Attacker
+#  Identifying the Attacker
 
 ### Remove normal browsers (keep suspicious traffic)
 ```spl
@@ -76,13 +76,13 @@ user_agent!=*Firefox*
 | head 5
 ```
 
-📌 Attacker IP: **198.51.100.55**
+ Attacker IP: **198.51.100.55**
 
 ---
 
-# 🕵️ Attack Chain
+#  Attack Chain
 
-## 1️⃣ Recon
+## 1️ Recon
 ```spl
 sourcetype=web_traffic 
 client_ip="198.51.100.55" 
@@ -92,29 +92,29 @@ AND path IN ("/.env","/*phpinfo*","/.git*")
 
 ---
 
-## 2️⃣ Path Traversal Attempts
+## 2️ Path Traversal Attempts
 ```spl
 sourcetype=web_traffic 
 client_ip="198.51.100.55" 
 AND path="*..\/..\/*" OR path="*redirect*" 
 | stats count by path
 ```
-📌 Attempts: **658**
+ Attempts: **658**
 
 ---
 
-## 3️⃣ SQL Injection
+## 3️ SQL Injection
 ```spl
 sourcetype=web_traffic 
 client_ip="198.51.100.55" 
 AND user_agent IN ("*sqlmap*","*Havij*") 
 | table _time, path, status
 ```
-📌 Havij events: **993**
+ Havij events: **993**
 
 ---
 
-## 4️⃣ Exfiltration Attempts
+## 4️ Exfiltration Attempts
 ```spl
 sourcetype=web_traffic 
 client_ip="198.51.100.55" 
@@ -124,7 +124,7 @@ AND path IN ("*backup.zip*","*logs.tar.gz*")
 
 ---
 
-## 5️⃣ Webshell & Ransomware Execution
+## 5️ Webshell & Ransomware Execution
 ```spl
 sourcetype=web_traffic 
 client_ip="198.51.100.55" 
@@ -134,7 +134,7 @@ AND path IN ("*bunnylock.bin*","*shell.php?cmd=*")
 
 ---
 
-# 📡 C2 Communication (Firewall Logs)
+#  C2 Communication (Firewall Logs)
 ```spl
 sourcetype=firewall_logs 
 src_ip="10.10.1.5" 
@@ -145,7 +145,7 @@ AND action="ALLOWED"
 
 ---
 
-# 📦 Data Exfiltration Total
+#  Data Exfiltration Total
 ```spl
 sourcetype=firewall_logs 
 src_ip="10.10.1.5" 
@@ -154,11 +154,11 @@ AND action="ALLOWED"
 | stats sum(bytes_transferred) by src_ip
 ```
 
-📌 Bytes exfiltrated: **126167**
+ Bytes exfiltrated: **126167**
 
 ---
 
-# 🧩 Answers Summary
+#  Answers Summary
 
 | Question | Answer |
 |---------|--------|
@@ -170,7 +170,7 @@ AND action="ALLOWED"
 
 ---
 
-# 🎓 Lessons Learned
+#  Lessons Learned
 - Filtering logs reveals attacker behavior  
 - Recon → traversal → SQLi → webshell → ransomware → exfiltration  
 - Outbound firewall logs confirm C2 channels  
