@@ -2,20 +2,18 @@
 
 ## Overview
 In this room, we learned the **fundamentals of malware analysis** by analysing a malicious sample called
-**HopHelper.exe**. We explored both **static** and **dynamic** analysis techniques using industry-standard tools
-to understand malware behaviour, persistence, and network communication.
+**HopHelper.exe**. We performed both **static** and **dynamic** analysis using real-world malware analysis tools
+to understand persistence, system interaction, and network communication.
 
 ---
 
 ## What is Malware Analysis?
 
-Malware analysis is the process of examining a malicious file to:
-- Understand how it works
+Malware analysis is the process of examining malicious files to:
+- Understand how they operate
 - Identify attacker techniques
 - Extract indicators of compromise (IOCs)
-- Create defensive measures
-
-The goal is not fear, but **proactive defence**.
+- Improve defensive detection and response
 
 ---
 
@@ -23,22 +21,32 @@ The goal is not fear, but **proactive defence**.
 
 ### Static Analysis
 - Examining a file **without executing it**
-- Fast and low-risk
-- Useful for initial triage and intelligence gathering
+- Safe and fast
+- Used for initial intelligence gathering
 
 ### Dynamic Analysis
-- Executing the malware in a **safe sandbox**
-- Observing real behaviour on the system
-- Higher risk, but more accurate
+- Executing malware in a **sandboxed environment**
+- Observing real system behaviour
+- Reveals persistence and network activity
 
 ---
 
 ## Sandboxing
 
-- Malware must **never** be executed on systems you care about
-- Sandboxes are isolated environments (usually virtual machines)
-- Allow safe execution and observation
-- Snapshots enable easy rollback
+- Malware must **never** be run on production systems
+- Sandboxes are isolated virtual machines
+- Snapshots allow safe rollback after execution
+- All analysis was performed inside a controlled VM
+
+---
+
+## Tools Used in This Room
+
+During this room, the following industry-standard tools were used:
+
+- **PeStudio** – static analysis of Windows executables
+- **Regshot** – registry comparison before and after execution
+- **Process Monitor (ProcMon)** – monitoring file, registry, and network activity
 
 ---
 
@@ -46,88 +54,89 @@ The goal is not fear, but **proactive defence**.
 
 ### Tool Used: PeStudio
 
-Static analysis was performed using **PeStudio** to extract metadata and indicators.
-
-#### Information Collected:
-- File checksum (SHA256)
-- Strings embedded in the executable
-- Imports and resources
+PeStudio was used to analyse HopHelper.exe without execution and extract:
+- File hashes
+- Embedded strings
+- Indicators of suspicious behaviour
 
 ### SHA256 Checksum
 ```text
 F29C270068F865EF4A747E2683BFA07667BF64E768B38FBB9A2750A3D879CA33
 ```
 
-This checksum can be used as threat intelligence.
+This hash can be used as an IOC for detection and threat intelligence.
 
 ---
 
 ### Strings Analysis
 
-Strings were analysed to identify readable data such as:
-- URLs
-- Commands
-- Flags
+Using PeStudio’s **Strings** view, readable data inside the executable was analysed.
 
-Flag found in strings:
+Flag found:
 ```text
 THM{STRINGS_FOUND}
 ```
+
+Strings can reveal:
+- URLs
+- Commands
+- Hardcoded values
+- Debug artifacts
 
 ---
 
 ## Dynamic Analysis – HopHelper.exe
 
-Dynamic analysis involved executing the malware inside the sandbox
-and observing system changes.
+Dynamic analysis was performed by executing the malware inside the sandbox
+and monitoring system changes.
 
 ---
 
-## Registry Persistence (Regshot)
+## Registry Persistence Analysis
 
 ### Tool Used: Regshot
 
 Regshot was used to:
-1. Capture registry state **before execution**
+1. Capture the registry **before execution**
 2. Execute HopHelper.exe
-3. Capture registry state **after execution**
-4. Compare differences
+3. Capture the registry **after execution**
+4. Compare changes
 
-### Persistence Mechanism Found
+### Persistence Mechanism Identified
 ```text
 HKU\S-1-5-21-1966530601-3185510712-10604624-1008\Software\Microsoft\Windows\CurrentVersion\Run\HopHelper
 ```
 
-This confirms the malware establishes **persistence** via a Run key.
+This confirms the malware establishes **persistence via a Run key**.
 
 ---
 
-## Process Behaviour (ProcMon)
+## Process & Network Behaviour
 
 ### Tool Used: Process Monitor (ProcMon)
 
-ProcMon was used to observe:
-- File creation
-- Registry access
-- Network connections
+ProcMon was used to:
+- Monitor file operations
+- Track registry access
+- Observe network connections
 
 Filters were applied to:
-- Focus only on **HopHelper.exe**
-- Reduce background noise
-- Inspect specific operations
+- Isolate **HopHelper.exe**
+- Reduce system noise
+- Focus on relevant operations
 
 ---
 
-### Network Activity
+### Network Communication
 
 ProcMon was filtered for **TCP operations**.
 
-Network protocol used:
+Network protocol observed:
 ```text
 HTTP
 ```
 
-This indicates the malware communicates with a remote web service.
+This indicates communication with a remote web service.
 
 ---
 
@@ -143,9 +152,8 @@ This indicates the malware communicates with a remote web service.
 ---
 
 ## Lessons Learned
-- Never run malware on real systems
-- Static analysis provides fast intelligence
-- Dynamic analysis reveals real behaviour
-- Registry Run keys are common persistence methods
-- ProcMon is essential for behaviour analysis
-- Combining tools gives full visibility
+- Malware analysis must be done in isolated environments
+- PeStudio is effective for quick static analysis
+- Regshot is useful for detecting persistence mechanisms
+- ProcMon provides deep visibility into malware behaviour
+- Combining static and dynamic analysis gives full context
