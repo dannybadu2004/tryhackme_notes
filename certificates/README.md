@@ -5,7 +5,7 @@ This folder contains the certificates I have earned from TryHackMe to showcase m
 ## Included Certificates
 
 - **Advent of Cyber 2025** – Completed all 24 challenges  
-  ![Advent of Cyber 2025 Certificate](adventofcyber.png)
+  ![Advent of Cyber 2025 Certificate](adventofcyber2025.png)
 
 - **Pre Security Learning Path** – Completed foundational cybersecurity modules  
   ![Pre Security Learning Path Certificate](pre-security-certificate.png)
