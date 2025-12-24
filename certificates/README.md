@@ -14,5 +14,4 @@ This folder contains the certificates I have earned from TryHackMe to showcase m
 
 - Certificates are **proof of hands-on learning and skill development** in cybersecurity.  
 - All labs and learning tasks were completed manually.  
-- AI tools were only used to help **structure explanations and documentation**.
 
