@@ -26,4 +26,5 @@ TryHackMe’s Advent of Cyber 2025.
 - Security awareness & analysis
 
 ## Certificate
-- Advent of Cyber 2025 – TryHackMe (December 2025)
+![Advent of Cyber 2025 Certificate](../certificates/adventofcyber2025.png)
+
